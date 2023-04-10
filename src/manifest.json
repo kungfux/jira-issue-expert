@@ -13,7 +13,7 @@
         "*://*.atlassian.net/jira/*"
       ],
       "js": [
-        "index.js"
+        "bundle.js"
       ]
     }
   ],

@@ -1,0 +1,25 @@
+{
+  "name": "jira-automation-extension",
+  "version": "1.0.0",
+  "description": "Browser extension to automate typical actions in JIRA",
+  "private": true,
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kungfux/jira-automation-extension.git"
+  },
+  "author": "Alexander Fuks",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kungfux/jira-automation-extension/issues"
+  },
+  "homepage": "https://github.com/kungfux/jira-automation-extension#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "webpack": "^5.78.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
