@@ -1,11 +1,15 @@
 {
   "name": "jira-automation-extension",
   "version": "1.0.0",
-  "description": "Browser extension to automate typical actions in JIRA",
+  "description": "Add extra features to JIRA.",
   "private": true,
   "scripts": {
-    "start": "webpack --watch --config webpack.dev.js",
+    "build:chrome": "npm run build -- --env BROWSER=chrome",
+    "build:firefox": "npm run build -- --env BROWSER=firefox",
     "build": "webpack --config webpack.prod.js",
+    "watch:chrome": "npm run watch -- --env BROWSER=chrome",
+    "watch:firefox": "npm run watch -- --env BROWSER=firefox",
+    "watch": "webpack --watch --config webpack.dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +24,7 @@
   "homepage": "https://github.com/kungfux/jira-automation-extension#readme",
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
+    "merge-jsons-webpack-plugin": "^2.0.1",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.4",
     "webpack": "^5.78.0",

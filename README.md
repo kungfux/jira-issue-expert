@@ -1,19 +1,36 @@
 # Introduction
 
-`JIRA Automation` is a browser extension to automate typical actions in JIRA.
+`JIRA Automation` is a browser extension to add extra features to JIRA.
 
-## Features
+# Features
 
 - TBD
 
-## Development
+# Install
 
-### How to build and test
+Add an extension to your favorite browser by visiting extensions store
 
-- Install latest LTS versions of [Node.js](https://nodejs.org/en) and npm
-- Execute `npm install` to restore project dependencies
-- Run `npm run start` to compile and bundle source code
-- Load unpacked extension from `dist` folder into your browser
+TBD
+
+# Build and test locally
+
+- Install [Node.js](https://nodejs.org/) (LTS version)
+- Run following commands from project's root directory to build extension
+
+```bash
+$ npm install # Restore project dependencies
+$ npm run build:chrome # Build extension for Chrome
+$ npm run build:firefox # Build extension for Firefox
+```
+
+- Run following commands to debug extension
+
+```bash
+$ npm run watch:chrome
+$ npm run watch:firefox
+```
+
+- Follow these articles to load unpacked extension from `dist` folder into your browser
   - [Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension#installing)
   - [Chrome](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked)
 

@@ -1,4 +1,4 @@
-name: Build with NodeJS and Webpack
+name: Build extension
 
 on:
   push:
@@ -10,10 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        browser: ['chrome', 'firefox']
+
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js
+      - name: Setup Node.js LTS
         uses: actions/setup-node@v3
         with:
           node-version: lts/*
@@ -21,11 +25,13 @@ jobs:
       - name: Build
         run: |
           npm install
-          npm run build
+          npm run build:${{matrix.browser}}
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v3
         with:
           name: jira-automation-extension
           path: |
-            dist/**/*.*
+            dist/
+            !dist/**/*.zip
+          if-no-files-found: error
