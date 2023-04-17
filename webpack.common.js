@@ -8,7 +8,7 @@ module.exports = (env) => {
     output: {
       filename: 'bundle.js',
       path: path.resolve(__dirname, `dist/${env.BROWSER ?? 'chrome'}`),
-      clean: true
+      clean: true,
     },
     module: {
       rules: [
@@ -24,17 +24,18 @@ module.exports = (env) => {
     },
     plugins: [
       new CopyPlugin({
-        patterns: [
-          { from: './src/icons', to: 'icons' }
-        ],
+        patterns: [{ from: './src/icons', to: 'icons' }],
       }),
       new MergeJsonWebpackPlugin({
         space: 2,
-        files: ['./src/manifest.json', `./src/manifest.${env.BROWSER ?? 'chrome'}.json`],
+        files: [
+          './src/manifest.json',
+          `./src/manifest.${env.BROWSER ?? 'chrome'}.json`,
+        ],
         output: {
           fileName: 'manifest.json',
         },
       }),
     ],
-  }
+  };
 };

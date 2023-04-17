@@ -7,7 +7,25 @@ on:
     branches: ['master', 'dev']
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+
+      - name: Check code format and issues
+        run: |
+          npm install
+          npm run check
+
   build:
+    needs: check
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -17,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js LTS
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: lts/*

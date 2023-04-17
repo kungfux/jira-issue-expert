@@ -1,0 +1,29 @@
+{
+  "overrides": [
+    {
+      "env": {
+        "browser": true,
+        "es2021": true
+      },
+      "files": ["*.ts"],
+      "extends": ["@eslint-recommended/eslint-config-typescript", "prettier"],
+      "parserOptions": {
+        "project": "tsconfig.json",
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+      }
+    },
+    {
+      "env": {
+        "node": true,
+        "es2021": true
+      },
+      "files": ["*.js"],
+      "extends": ["eslint:recommended", "prettier"],
+      "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+      }
+    }
+  ]
+}

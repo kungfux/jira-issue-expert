@@ -9,15 +9,9 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://*.atlassian.net/jira/*"
-      ],
-      "js": [
-        "bundle.js"
-      ]
+      "matches": ["*://*.atlassian.net/jira/*"],
+      "js": ["bundle.js"]
     }
   ],
-  "host_permissions": [
-    "*://*.atlassian.net/jira/*"
-  ]
+  "host_permissions": ["*://*.atlassian.net/jira/*"]
 }

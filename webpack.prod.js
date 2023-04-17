@@ -5,4 +5,4 @@ module.exports = (env) => {
   return merge(common(env), {
     mode: 'production',
   });
-}
+};
