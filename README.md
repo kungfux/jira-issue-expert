@@ -1,6 +1,6 @@
 # Introduction
 
-`JIRA Automation` is a browser extension to add extra features to JIRA.
+`IssueExpert for JIRA` is a browser extension that adds extra functionality to JIRA for operating with issues.
 
 # Features
 

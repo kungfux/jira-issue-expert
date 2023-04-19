@@ -1,7 +1,7 @@
 {
-  "name": "jira-automation-extension",
+  "name": "jira-issue-expert",
   "version": "1.0.0",
-  "description": "Add extra features to JIRA.",
+  "description": "Add extra functionality to JIRA for operating with issues.",
   "private": true,
   "scripts": {
     "build:chrome": "npm run build -- --env BROWSER=chrome",
@@ -20,14 +20,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kungfux/jira-automation-extension.git"
+    "url": "git+https://github.com/kungfux/jira-issue-expert.git"
   },
   "author": "Alexander Fuks",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kungfux/jira-automation-extension/issues"
+    "url": "https://github.com/kungfux/jira-issue-expert/issues"
   },
-  "homepage": "https://github.com/kungfux/jira-automation-extension#readme",
+  "homepage": "https://github.com/kungfux/jira-issue-expert#readme",
   "devDependencies": {
     "@eslint-recommended/eslint-config-typescript": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
