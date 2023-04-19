@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "JIRA Automation",
+  "name": "IssueExpert for JIRA",
   "version": "1.0",
-  "description": "Browser extension to automate typical actions in JIRA.",
+  "description": "Add extra functionality to JIRA for operating with issues.",
   "icons": {
     "48": "icons/logo48.png",
     "128": "icons/logo128.png"
