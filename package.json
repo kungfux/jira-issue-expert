@@ -1,0 +1,48 @@
+{
+  "name": "jira-automation-extension",
+  "version": "1.0.0",
+  "description": "Add extra features to JIRA.",
+  "private": true,
+  "scripts": {
+    "build:chrome": "npm run build -- --env BROWSER=chrome",
+    "build:firefox": "npm run build -- --env BROWSER=firefox",
+    "build": "webpack --config webpack.prod.js",
+    "watch:chrome": "npm run watch -- --env BROWSER=chrome",
+    "watch:firefox": "npm run watch -- --env BROWSER=firefox",
+    "watch": "webpack --watch --config webpack.dev.js",
+    "check:prettier": "npx prettier --check .",
+    "check:eslint": "npx eslint .",
+    "check": "npm run check:prettier & npm run check:eslint",
+    "fix:prettier": "npx prettier --write .",
+    "fix:eslint": "npx eslint --fix",
+    "fix": "npm run fix:prettier & npm run fix:eslint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kungfux/jira-automation-extension.git"
+  },
+  "author": "Alexander Fuks",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kungfux/jira-automation-extension/issues"
+  },
+  "homepage": "https://github.com/kungfux/jira-automation-extension#readme",
+  "devDependencies": {
+    "@eslint-recommended/eslint-config-typescript": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "merge-jsons-webpack-plugin": "^2.0.1",
+    "prettier": "^2.8.7",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack": "^5.79.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-merge": "^5.8.0"
+  }
+}
