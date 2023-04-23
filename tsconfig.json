@@ -6,6 +6,12 @@
     "module": "es6",
     "target": "es5",
     "moduleResolution": "node",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "strict": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
   }
 }

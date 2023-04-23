@@ -3,11 +3,12 @@ const CopyPlugin = require('copy-webpack-plugin');
 const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
 
 module.exports = (env) => {
+  const browser = env.BROWSER ?? 'chrome';
   return {
-    entry: './src/index.ts',
+    entry: { background: './src/background/index.ts', content: './src/content/index.ts' },
     output: {
-      filename: 'bundle.js',
-      path: path.resolve(__dirname, `dist/${env.BROWSER ?? 'chrome'}`),
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, `dist/${browser}`),
       clean: true,
     },
     module: {
@@ -24,7 +25,9 @@ module.exports = (env) => {
     },
     plugins: [
       new CopyPlugin({
-        patterns: [{ from: './src/icons', to: 'icons' }],
+        patterns: [
+          { from: './src/icons', to: 'icons' },
+        ],
       }),
       new MergeJsonWebpackPlugin({
         space: 2,
