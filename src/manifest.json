@@ -7,11 +7,6 @@
     "48": "icons/logo48.png",
     "128": "icons/logo128.png"
   },
-  "content_scripts": [
-    {
-      "matches": ["*://*.atlassian.net/jira/*"],
-      "js": ["bundle.js"]
-    }
-  ],
-  "host_permissions": ["*://*.atlassian.net/jira/*"]
+  "permissions": ["tabs", "webNavigation", "scripting", "activeTab"],
+  "host_permissions": ["<all_urls>"]
 }
