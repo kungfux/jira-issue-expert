@@ -6,6 +6,6 @@ module.exports = (env) => {
     mode: 'production',
   };
   return merge(common(env, argv), {
-    ...argv
+    ...argv,
   });
 };

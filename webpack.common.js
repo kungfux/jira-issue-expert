@@ -6,7 +6,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = (env, argv) => {
   const browser = env.BROWSER ?? 'chrome';
   return {
-    entry: { background: './src/background/index.ts', content: './src/content/index.ts', options: './src/options/options.ts' },
+    entry: {
+      background: './src/background/index.ts',
+      content: './src/content/index.ts',
+      options: './src/options/options.ts',
+    },
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, `dist/${browser}`),
@@ -25,19 +29,17 @@ module.exports = (env, argv) => {
       extensions: ['.tsx', '.ts', '.js'],
     },
     experiments: {
-      topLevelAwait: true
+      topLevelAwait: true,
     },
     plugins: [
       new HtmlWebpackPlugin({
         filename: 'options.html',
         template: './src/options/options.html',
         chunks: [],
-        minify: argv.mode === 'production'
+        minify: argv.mode === 'production',
       }),
       new CopyPlugin({
-        patterns: [
-          { from: './src/icons', to: 'icons' },
-        ],
+        patterns: [{ from: './src/icons', to: 'icons' }],
       }),
       new MergeJsonWebpackPlugin({
         space: 2,
