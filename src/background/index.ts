@@ -1,12 +1,8 @@
 import { runtime } from 'webextension-polyfill';
-import { Settings } from '../settings';
-import { ServiceWorker } from './service-worker';
+import { BackgroundService } from './background-service';
 
-runtime.onInstalled.addListener((details) => {
+new BackgroundService().init();
+
+runtime.onInstalled.addListener(() => {
   void runtime.openOptionsPage();
 });
-
-const settings = new Settings();
-const s = await settings.getSettings();
-const serviceWorker = new ServiceWorker(s.urls);
-serviceWorker.init();

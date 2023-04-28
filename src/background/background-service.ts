@@ -1,19 +1,16 @@
 import type { Tabs, WebNavigation } from 'webextension-polyfill';
 import { tabs, webNavigation, scripting } from 'webextension-polyfill';
+import { Settings } from '../settings';
 
-export class ServiceWorker {
-  private readonly urls: string[];
-  private readonly urlRegexs: RegExp[];
-
-  public constructor(urls: string[]) {
-    this.urls = urls;
-    this.urlRegexs = [];
-    for (const url of this.urls) {
-      this.urlRegexs.push(new RegExp(url, 'i'));
-    }
-  }
+export class BackgroundService {
+  private readonly settings = new Settings();
+  private urlRegexs: RegExp[] = [];
 
   public init(): void {
+    void this.getUrlsToListen();
+    this.settings.onChanged(() => {
+      void this.getUrlsToListen();
+    });
     tabs.onUpdated.addListener((tabId, changeInfo, tabInfo) => {
       void this.onTabUpdated(tabId, changeInfo, tabInfo);
     });
@@ -22,7 +19,7 @@ export class ServiceWorker {
     });
   }
 
-  public async onTabUpdated(
+  private async onTabUpdated(
     tabId: number,
     changeInfo: Tabs.OnUpdatedChangeInfoType,
     tabInfo: Tabs.Tab
@@ -32,11 +29,19 @@ export class ServiceWorker {
     }
   }
 
-  public async onNavigationCompleted(
+  private async onNavigationCompleted(
     details: WebNavigation.OnCompletedDetailsType
   ): Promise<void> {
     if (details.url.length > 0 && this.isJiraUrl(details.url)) {
       await this.injectContentScript(details.tabId);
+    }
+  }
+
+  private async getUrlsToListen(): Promise<void> {
+    const { urls } = await this.settings.getSettings();
+    this.urlRegexs = [];
+    for (const url of urls) {
+      this.urlRegexs.push(new RegExp(url, 'i'));
     }
   }
 
