@@ -2,7 +2,10 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = (env) => {
-  return merge(common(env), {
+  const argv = {
     mode: 'production',
+  };
+  return merge(common(env, argv), {
+    ...argv,
   });
 };

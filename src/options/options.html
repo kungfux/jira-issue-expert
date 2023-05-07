@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Settings - IssueExpert for JIRA</title>
+  </head>
+
+  <body>
+    <form>
+      <label for="urls" style="display: block">JIRA URLs:</label>
+      <textarea
+        id="urls"
+        name="URL"
+        rows="5"
+        cols="33"
+        placeholder="Specify JIRA URLs you want to enable IssueExpert for separated by semicolon e.g. https://*.atlassian.net/jira/.*;https://jira.issueexpert.com/.*"
+      ></textarea>
+      <button type="submit" id="save" style="display: block">Save</button>
+    </form>
+    <script src="options.bundle.js"></script>
+  </body>
+</html>

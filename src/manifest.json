@@ -7,6 +7,10 @@
     "48": "icons/logo48.png",
     "128": "icons/logo128.png"
   },
-  "permissions": ["tabs", "webNavigation", "scripting", "activeTab"],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": ["tabs", "webNavigation", "scripting", "activeTab", "storage"],
   "host_permissions": ["<all_urls>"]
 }
