@@ -18,4 +18,12 @@ export class Settings {
       urls: settings.urls,
     });
   }
+
+  public onChanged(callback: () => void): void {
+    if (!storage.onChanged.hasListener(callback)) {
+      storage.onChanged.addListener(() => {
+        callback();
+      });
+    }
+  }
 }

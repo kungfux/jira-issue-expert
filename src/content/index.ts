@@ -11,5 +11,5 @@ declare global {
     return;
   }
   window.hasRun = true;
-  new IssueExpert().print();
+  new IssueExpert().init();
 })();
