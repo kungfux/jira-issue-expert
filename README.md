@@ -2,15 +2,30 @@
 
 `IssueExpert for JIRA` is a browser extension that adds extra functionality to JIRA for operating with issues.
 
+> Note: Currently supported JIRA version is 9.4.0 only!
+
 # Features
 
-- TBD
+> Check out [demo](#demo) section to see it in action.
+
+- Copy issue link, number, summary to clipboard
 
 # Install
 
 Add an extension to your favorite browser by visiting extensions store
 
-TBD
+[![](docs/get_addon_firefox.png)](https://addons.mozilla.org/en-US/firefox/addon/issueexpert-for-jira/) [![](docs/get_addon_chrome.png)](https://chrome.google.com/webstore/detail/issueexpert-for-jira/fdpnlhakdaikopniehgchiagamknknom)
+
+## Note for Firefox users
+
+Make sure to allow the extension to access website:
+
+- Navigate to JIRA instance site
+- Click the extensions icon
+- Click gear icon
+- Click `Always Allow on *.issueexpert.com`
+
+![asd](docs/firefox_permissions.png)
 
 # Build and test locally
 
@@ -38,3 +53,8 @@ $ npm run watch:firefox
 
 - Check out [LICENSE](LICENSE) for the license details
 - Icons by [Flatart](https://www.freepik.com/author/flatart)
+
+# Demo
+
+![Copy issue number](docs/copy-issue-number.png)
+&nbsp;

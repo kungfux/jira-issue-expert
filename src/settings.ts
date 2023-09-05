@@ -2,20 +2,26 @@ import { storage } from 'webextension-polyfill';
 
 export interface ISettings {
   urls: string[];
+  enableDebugMode: boolean;
 }
 
 export class Settings {
-  async getSettings(): Promise<ISettings> {
+  public async getSettings(): Promise<ISettings> {
     const settings = (await storage.sync.get()) as ISettings;
     return {
       // TODO: RegExp is not user friendly
-      urls: settings.urls ?? ['https://.*/jira/software/projects'],
+      urls:
+        settings.urls !== undefined && settings.urls.length > 0
+          ? settings.urls
+          : ['/secure/RapidBoard.jspa', '/browse/(\\w+-\\d+)'],
+      enableDebugMode: settings.enableDebugMode ?? false,
     };
   }
 
-  async setSettings(settings: ISettings): Promise<void> {
+  public async setSettings(settings: ISettings): Promise<void> {
     await storage.sync.set({
       urls: settings.urls,
+      enableDebugMode: settings.enableDebugMode,
     });
   }
 
