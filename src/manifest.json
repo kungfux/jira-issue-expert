@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "IssueExpert for JIRA",
+  "version": "0.1.4",
+  "description": "Add extra functionality to JIRA for operating with issues.",
+  "icons": {
+    "48": "icons/logo48.png",
+    "128": "icons/logo128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": ["tabs", "webNavigation", "scripting", "activeTab", "storage"],
+  "host_permissions": ["<all_urls>"]
+}
