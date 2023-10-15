@@ -48,9 +48,8 @@ export class CopyIssueToClipboard implements Feature {
     const issueNumberContainer = await this.locator.waitForElement(
       containerSelector.replace('{issueNumber}', issueNumber)
     );
-    const issueSummaryElement = await this.locator.waitForElement(
-      issueSummarySelector
-    );
+    const issueSummaryElement =
+      await this.locator.waitForElement(issueSummarySelector);
     const issueSummary = issueSummaryElement?.textContent ?? '';
     const issueBrowseUrl = `${new URL(url).origin}/browse/${issueNumber}`;
 
@@ -59,9 +58,11 @@ export class CopyIssueToClipboard implements Feature {
       return;
     }
 
-    if (
-      this.locator.getElementByXpath('//*[@id="ie-copy-section"]') !== undefined
-    ) {
+    const copySectionSelector = '//*[@id="ie-copy-section"]';
+    const copyContentSelector = '//*[@id="ie-copy-content"]';
+    const copyContentOpenClassName = 'ie-copy-content-open';
+
+    if (this.locator.getElementByXpath(copySectionSelector) !== undefined) {
       return;
     }
 
@@ -99,9 +100,6 @@ export class CopyIssueToClipboard implements Feature {
         color: #fff;
         transition: background-color .1s;
       }
-      .ie-copy-dd:hover .ie-copy-content {
-        display: block;
-      }
       hr.ie-copy-hr {
         color: #42526e;
         background-color: #42526e;
@@ -109,12 +107,15 @@ export class CopyIssueToClipboard implements Feature {
         border: none;
         height: 1px;
       }
+      .${copyContentOpenClassName} {
+        display: block;
+      }
     `);
     (issueNumberContainer as HTMLElement).style.overflow = 'visible';
     issueNumberContainer.innerHTML += `
-      <div id='ie-copy-section' class="ie-copy-dd">
+      <div id="ie-copy-section" class="ie-copy-dd">
         <button class="ie-copy-btn">Copy</button>
-        <div class="ie-copy-content">
+        <div id="ie-copy-content" class="ie-copy-content">
           <a id="ie-copy-link" title="${issueBrowseUrl}">Link</a>
           <a id="ie-copy-number" title="${issueNumber}">Number</a>
           <hr class="ie-copy-hr"/>
@@ -125,25 +126,41 @@ export class CopyIssueToClipboard implements Feature {
         </div>
       </div>
     `;
+
+    const copySectionElement =
+      this.locator.getElementByXpath(copySectionSelector);
+    const copyContentElement =
+      this.locator.getElementByXpath(copyContentSelector);
+    copySectionElement?.addEventListener('mouseenter', () => {
+      copyContentElement?.classList.add(copyContentOpenClassName);
+    });
+    copySectionElement?.addEventListener('mouseleave', () => {
+      copyContentElement?.classList.remove(copyContentOpenClassName);
+    });
+
     this.locator
       .getElementByXpath('//*[@id="ie-copy-link"]')
       ?.addEventListener('click', () => {
         this.copyToClipboard(issueBrowseUrl);
+        copyContentElement?.classList.remove(copyContentOpenClassName);
       });
     this.locator
       .getElementByXpath('//*[@id="ie-copy-number"]')
       ?.addEventListener('click', () => {
         this.copyToClipboard(issueNumber);
+        copyContentElement?.classList.remove(copyContentOpenClassName);
       });
     this.locator
       .getElementByXpath('//*[@id="ie-copy-number-and-summary"]')
       ?.addEventListener('click', () => {
         this.copyToClipboard(`${issueNumber} ${issueSummary}`);
+        copyContentElement?.classList.remove(copyContentOpenClassName);
       });
     this.locator
       .getElementByXpath('//*[@id="ie-copy-link-and-summary"]')
       ?.addEventListener('click', () => {
         this.copyToClipboard(`${issueSummary}\n${issueBrowseUrl}`);
+        copyContentElement?.classList.remove(copyContentOpenClassName);
       });
     this.locator
       .getElementByXpath('//*[@id="ie-copy-markdown"]')
@@ -151,6 +168,7 @@ export class CopyIssueToClipboard implements Feature {
         this.copyToClipboard(
           `[${issueNumber} ${issueSummary}](${issueBrowseUrl})`
         );
+        copyContentElement?.classList.remove(copyContentOpenClassName);
       });
   }
 
