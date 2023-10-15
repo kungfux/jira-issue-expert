@@ -1,8 +1,10 @@
 import { runtime } from 'webextension-polyfill';
 import { BackgroundService } from './background-service';
 
-new BackgroundService().init();
-
-runtime.onInstalled.addListener(() => {
-  void runtime.openOptionsPage();
+runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'install') {
+    void runtime.openOptionsPage();
+  }
 });
+
+new BackgroundService().init();

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
   <head>
@@ -7,15 +7,33 @@
   </head>
 
   <body>
+    <h1>IssueExpert for JIRA</h1>
     <form>
-      <label for="urls" style="display: block">JIRA URLs:</label>
-      <textarea
-        id="urls"
-        name="URL"
-        rows="5"
-        cols="33"
-        placeholder="Specify JIRA URLs you want to enable IssueExpert for separated by semicolon e.g. https://*.atlassian.net/jira/.*;https://jira.issueexpert.com/.*"
-      ></textarea>
+      <fieldset style="width: fit-content">
+        <legend>Configure IssueExpert to make it yours:</legend>
+
+        <div>
+          <label for="urls" style="display: block">JIRA URLs:</label>
+          <textarea
+            id="urls"
+            name="URL"
+            rows="5"
+            cols="33"
+            placeholder="Specify JIRA URLs you want enable IssueExpert for separated by semicolon e.g. https://jira.issueexpert.com RegExp will work also e.g. https://*.atlassian.net/jira/.*;https://jira.issueexpert.com/.*"
+          ></textarea>
+        </div>
+
+        <div>
+          <label>
+            <input
+              id="enableDebugMode"
+              type="checkbox"
+              value="Enable debug messages"
+            />
+            Enable debug messages
+          </label>
+        </div>
+      </fieldset>
       <button type="submit" id="save" style="display: block">Save</button>
     </form>
     <script src="options.bundle.js"></script>

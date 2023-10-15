@@ -1,6 +1,8 @@
 import type { Tabs, WebNavigation } from 'webextension-polyfill';
 import { tabs, webNavigation, scripting } from 'webextension-polyfill';
 import { Settings } from '../settings';
+import { Log } from '../log';
+import * as Browser from 'webextension-polyfill';
 
 export class BackgroundService {
   private readonly settings = new Settings();
@@ -25,7 +27,9 @@ export class BackgroundService {
     tabInfo: Tabs.Tab
   ): Promise<void> {
     if (changeInfo.url !== undefined && this.isJiraUrl(changeInfo.url)) {
+      void Log.info('onTabUpdated gets called');
       await this.injectContentScript(tabId);
+      this.sendNewUrlMessage(tabId, changeInfo.url);
     }
   }
 
@@ -33,7 +37,9 @@ export class BackgroundService {
     details: WebNavigation.OnCompletedDetailsType
   ): Promise<void> {
     if (details.url.length > 0 && this.isJiraUrl(details.url)) {
+      void Log.info('onNavigationCompleted gets called');
       await this.injectContentScript(details.tabId);
+      this.sendNewUrlMessage(details.tabId, details.url);
     }
   }
 
@@ -63,7 +69,11 @@ export class BackgroundService {
         files: ['content.bundle.js'],
       });
     } catch (error) {
-      console.error(`Failed to inject content script: ${String(error)}`);
+      void Log.error(`Failed to inject content script: ${String(error)}`);
     }
+  }
+
+  private sendNewUrlMessage(tabId: number, newUrl: string): void {
+    void Browser.tabs.sendMessage(tabId, { newUrl });
   }
 }

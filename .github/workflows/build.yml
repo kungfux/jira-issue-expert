@@ -50,6 +50,5 @@ jobs:
         with:
           name: jira-issue-expert
           path: |
-            dist/
-            !dist/**/*.zip
+            dist/**/*.zip
           if-no-files-found: error
