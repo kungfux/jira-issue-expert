@@ -14,6 +14,28 @@ export class CopyIssueToClipboard implements Feature {
   private readonly issueSelectedUrlRegExp: RegExp =
     /selectedissue=([a-z]+-\d+)/i;
 
+  private readonly classes = {
+    copyContentOpen: 'ie-copy-content-open',
+  };
+
+  private readonly ids = {
+    copyLinkActionId: 'ie-copy-link',
+    copyNumberActionId: 'ie-copy-number',
+    copyNumberAndSummaryActionId: 'ie-copy-number-and-summary',
+    copyLinkAndSummaryActionId: 'ie-copy-link-and-summary',
+    copyMarkdownActionId: 'ie-copy-markdown',
+  };
+
+  private readonly selectors = {
+    copySection: '//*[@id="ie-copy-section"]',
+    copyContent: '//*[@id="ie-copy-content"]',
+    copyLinkAction: `//*[@id="${this.ids.copyLinkActionId}"]`,
+    copyNumberAction: `//*[@id="${this.ids.copyNumberActionId}"]`,
+    copyNumberAndSummaryAction: `//*[@id="${this.ids.copyNumberAndSummaryActionId}"]`,
+    copyLinkAndSummaryAction: `//*[@id="${this.ids.copyLinkAndSummaryActionId}"]`,
+    copyMarkdownAction: `//*[@id="${this.ids.copyMarkdownActionId}"]`,
+  };
+
   public async init(url: string): Promise<void> {
     const browseIssueNumber = this.issueBrowseUrlRegExp.exec(url)?.[1];
     const selectedIssueNumber = this.issueSelectedUrlRegExp.exec(url)?.[1];
@@ -58,11 +80,9 @@ export class CopyIssueToClipboard implements Feature {
       return;
     }
 
-    const copySectionSelector = '//*[@id="ie-copy-section"]';
-    const copyContentSelector = '//*[@id="ie-copy-content"]';
-    const copyContentOpenClassName = 'ie-copy-content-open';
-
-    if (this.locator.getElementByXpath(copySectionSelector) !== undefined) {
+    if (
+      this.locator.getElementByXpath(this.selectors.copySection) !== undefined
+    ) {
       return;
     }
 
@@ -107,7 +127,7 @@ export class CopyIssueToClipboard implements Feature {
         border: none;
         height: 1px;
       }
-      .${copyContentOpenClassName} {
+      .${this.classes.copyContentOpen} {
         display: block;
       }
     `);
@@ -116,66 +136,74 @@ export class CopyIssueToClipboard implements Feature {
       <div id="ie-copy-section" class="ie-copy-dd">
         <button class="ie-copy-btn">Copy</button>
         <div id="ie-copy-content" class="ie-copy-content">
-          <a id="ie-copy-link" title="${issueBrowseUrl}">Link</a>
-          <a id="ie-copy-number" title="${issueNumber}">Number</a>
+          <a id="${this.ids.copyLinkActionId}" title="${issueBrowseUrl}">Link</a>
+          <a id="${this.ids.copyNumberActionId}" title="${issueNumber}">Number</a>
           <hr class="ie-copy-hr"/>
-          <a id="ie-copy-link-and-summary" title="${issueNumber} ${issueSummary}">Link and Summary</a>
-          <a id="ie-copy-number-and-summary" title="${issueSummary} ${issueBrowseUrl}">Number and Summary</a>
+          <a id="${this.ids.copyLinkAndSummaryActionId}" title="${issueNumber} ${issueSummary}">Link and Summary</a>
+          <a id="${this.ids.copyNumberAndSummaryActionId}" title="${issueSummary} ${issueBrowseUrl}">Number and Summary</a>
           <hr class="ie-copy-hr"/>
-          <a id="ie-copy-markdown" title="[${issueNumber} ${issueSummary}](${issueBrowseUrl})">Markdown</a>
+          <a id="${this.ids.copyMarkdownActionId}" title="[${issueNumber} ${issueSummary}](${issueBrowseUrl})">Markdown</a>
         </div>
       </div>
     `;
 
-    const copySectionElement =
-      this.locator.getElementByXpath(copySectionSelector);
-    const copyContentElement =
-      this.locator.getElementByXpath(copyContentSelector);
+    const copySectionElement = this.locator.getElementByXpath(
+      this.selectors.copySection
+    );
+    const copyContentElement = this.locator.getElementByXpath(
+      this.selectors.copyContent
+    );
     copySectionElement?.addEventListener('mouseenter', () => {
-      copyContentElement?.classList.add(copyContentOpenClassName);
+      copyContentElement?.classList.add(this.classes.copyContentOpen);
     });
     copySectionElement?.addEventListener('mouseleave', () => {
-      copyContentElement?.classList.remove(copyContentOpenClassName);
+      copyContentElement?.classList.remove(this.classes.copyContentOpen);
     });
 
-    this.locator
-      .getElementByXpath('//*[@id="ie-copy-link"]')
-      ?.addEventListener('click', () => {
-        this.copyToClipboard(issueBrowseUrl);
-        copyContentElement?.classList.remove(copyContentOpenClassName);
-      });
-    this.locator
-      .getElementByXpath('//*[@id="ie-copy-number"]')
-      ?.addEventListener('click', () => {
-        this.copyToClipboard(issueNumber);
-        copyContentElement?.classList.remove(copyContentOpenClassName);
-      });
-    this.locator
-      .getElementByXpath('//*[@id="ie-copy-number-and-summary"]')
-      ?.addEventListener('click', () => {
-        this.copyToClipboard(`${issueNumber} ${issueSummary}`);
-        copyContentElement?.classList.remove(copyContentOpenClassName);
-      });
-    this.locator
-      .getElementByXpath('//*[@id="ie-copy-link-and-summary"]')
-      ?.addEventListener('click', () => {
-        this.copyToClipboard(`${issueSummary}\n${issueBrowseUrl}`);
-        copyContentElement?.classList.remove(copyContentOpenClassName);
-      });
-    this.locator
-      .getElementByXpath('//*[@id="ie-copy-markdown"]')
-      ?.addEventListener('click', () => {
-        this.copyToClipboard(
-          `[${issueNumber} ${issueSummary}](${issueBrowseUrl})`
-        );
-        copyContentElement?.classList.remove(copyContentOpenClassName);
-      });
+    this.addCopyClickHandler(this.selectors.copyLinkAction, issueBrowseUrl);
+    this.addCopyClickHandler(this.selectors.copyNumberAction, issueNumber);
+    this.addCopyClickHandler(
+      this.selectors.copyNumberAndSummaryAction,
+      `${issueNumber} ${issueSummary}`
+    );
+    this.addCopyClickHandler(
+      this.selectors.copyLinkAndSummaryAction,
+      `${issueSummary}\n${issueBrowseUrl}`
+    );
+    this.addCopyClickHandler(
+      this.selectors.copyMarkdownAction,
+      `[${issueNumber} ${issueSummary}](${issueBrowseUrl})`
+    );
+
+    this.watchForElementRemoval(this.selectors.copySection, () => {
+      void this.addCopyButton(
+        issueNumber,
+        url,
+        containerSelector,
+        issueSummarySelector
+      );
+    });
   }
 
   private addStyles(css: string): void {
     const style = document.createElement('style');
     style.innerHTML = css;
     document.head.append(style);
+  }
+
+  private addCopyClickHandler(
+    elementXPathSelector: string,
+    textToCopy: string
+  ): void {
+    this.locator
+      .getElementByXpath(elementXPathSelector)
+      ?.addEventListener('click', () => {
+        this.copyToClipboard(textToCopy);
+        const copyContentElement = this.locator.getElementByXpath(
+          this.selectors.copyContent
+        );
+        copyContentElement?.classList.remove(this.classes.copyContentOpen);
+      });
   }
 
   private copyToClipboard(text: string): void {
@@ -194,5 +222,18 @@ export class CopyIssueToClipboard implements Feature {
       void Log.error(`Copy to clipboard error: ${error as string}`);
     }
     copyTextArea.remove();
+  }
+
+  private watchForElementRemoval(
+    xPathSelector: string,
+    callback: () => void
+  ): void {
+    new MutationObserver((_mutations, observer) => {
+      const element = this.locator.getElementByXpath(xPathSelector);
+      if (element === undefined) {
+        observer.disconnect();
+        callback();
+      }
+    }).observe(document.body, { childList: true });
   }
 }

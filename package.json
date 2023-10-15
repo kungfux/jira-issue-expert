@@ -1,6 +1,6 @@
 {
   "name": "jira-issue-expert",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Add extra functionality to JIRA for operating with issues.",
   "private": true,
   "scripts": {
